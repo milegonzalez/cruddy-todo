@@ -21,24 +21,25 @@ exports.create = (text, callback) => {
 
 exports.readAll = (callback) => {
   var data = [];
-  var directory = exports.dataDir;
-  fs.readdir(directory, (err, files) => {
+  fs.readdir(exports.dataDir, (err, files) => {
     if (err) throw error;
     files.forEach(file => {
       let id = file.split('.')[0];
-      data.push({ id, text: id});
+      data.push({ id, text: id });
     });
     callback(null, data);
   });
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  var pathFile = path.join(exports.dataDir, `${id}.txt`)
+  fs.readFile(pathFile, 'utf8', (err, text) => {
+    if (err) {
+      callback(`No item with id: ${id}`);
+    } else {
+      callback(null, { id, text });
+    }
+  });
 };
 
 exports.update = (id, text, callback) => {
