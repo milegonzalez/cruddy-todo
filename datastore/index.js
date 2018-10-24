@@ -43,7 +43,7 @@ exports.readOne = (id, callback) => {
 };
 
 exports.update = (id, text, callback) => {
-  exports.readOne(id, (err, text) => {
+  exports.readOne(id, (err, obj) => {
     if (err) {
       callback(`No item with id: ${id}`);
     } else {
@@ -52,6 +52,7 @@ exports.update = (id, text, callback) => {
         if (err) {
           callback(`No item with id: ${id}`);
         } else {
+
           callback(null, text);
         }
       });
